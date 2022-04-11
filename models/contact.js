@@ -38,7 +38,16 @@ const joiSchema = Joi.object({
 })
     .or('email', 'phone')
 
+const joiStatusSchema = Joi.object({
+    favorite: Joi.bool()
+        .required()
+        .messages({
+            'any.required': `missing field favorite`
+        }),
+})
+
 module.exports = {
     Contact,
     joiSchema,
+    joiStatusSchema
 }

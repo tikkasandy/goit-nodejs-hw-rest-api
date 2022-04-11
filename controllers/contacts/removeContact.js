@@ -1,4 +1,5 @@
 const { Contact } = require('../../models')
+const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
 const removeContact = async (req, res) => {
     const { id } = req.params
@@ -6,18 +7,18 @@ const removeContact = async (req, res) => {
 
     if (!result) {
         return res
-            .status(404)
+            .status(HTTP_STATUS_CODE.NOT_FOUND)
             .json({
                 status: 'error',
-                code: 404,
-                message: 'Not Found'
+                code: HTTP_STATUS_CODE.NOT_FOUND,
+                message: `Contact with id=${id} not found`
             })
     }
 
     res.json({
         status: 'success',
-        code: 200,
-        message: `Contact deleted`,
+        code: HTTP_STATUS_CODE.OK,
+        message: `Contact with id=${id} deleted`,
     })
 }
 
