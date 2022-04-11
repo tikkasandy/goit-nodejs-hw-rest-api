@@ -14,6 +14,6 @@ router.post('/', validation(joiSchema), ctrlWrapper(controllers.addContact))
 
 // router.delete('/:id', controllers.removeContact)
 
-// router.put('/:id', validation(updateContactsSchema), controllers.updateContact)
+router.put('/:id', validation(joiSchema), ctrlWrapper(controllers.updateContact))
 
 module.exports = router

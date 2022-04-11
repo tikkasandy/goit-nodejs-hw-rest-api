@@ -18,6 +18,8 @@ const contactSchema = Schema({
     },
 }, { versionKey: false, timestamps: true })
 
+const Contact = model("contact", contactSchema)
+
 const joiSchema = Joi.object({
     name: Joi.string()
         .min(3)
@@ -36,26 +38,7 @@ const joiSchema = Joi.object({
 })
     .or('email', 'phone')
 
-// const updateContactsSchema = Joi.object({
-//     name: Joi.string()
-//         .min(3)
-//         .max(30),
-//     email: Joi.string()
-//         .email(),
-//     phone: Joi.string()
-//         .min(3)
-//         .max(20)
-//         .pattern(/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){3,14}(\s*)?$/),
-//     favorite: Joi.bool()
-// }).min(1)
-//     .messages({
-//         'object.min': "missing fields"
-//     })
-
-const Contact = model("contact", contactSchema)
-
 module.exports = {
     Contact,
     joiSchema,
-    // updateContactsSchema
 }

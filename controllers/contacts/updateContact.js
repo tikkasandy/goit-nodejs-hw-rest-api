@@ -1,9 +1,9 @@
-const contactsOperations = require('../../models/contacts/operations')
+const { Contact } = require('../../models')
 
-const updateContact = async (req, res, next) => {
+const updateContact = async (req, res) => {
     const { id } = req.params
 
-    const result = await contactsOperations.updateContact(id, req.body)
+    const result = await Contact.findByIdAndUpdate(id, req.body, { new: true })
 
     if (!result) {
         return res
