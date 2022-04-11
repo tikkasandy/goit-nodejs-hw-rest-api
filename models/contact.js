@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose')
-// const Joi = require("joi")
+const Joi = require("joi")
 
 const contactSchema = Schema({
     name: {
@@ -18,30 +18,23 @@ const contactSchema = Schema({
     },
 }, { versionKey: false, timestamps: true })
 
-// const joiSchema = Joi.object({
-//     name: Joi.string()
-//         .min(3)
-//         .max(30)
-//         .required()
-//         .messages({
-//             'any.required': `missing required {{#label}} field`
-//         }),
-//     email: Joi.string()
-//         .email()
-//         .required()
-//         .messages({
-//             'any.required': `missing required {{#label}} field`
-//         }),
-//     phone: Joi.string()
-//         .min(3)
-//         .max(20)
-//         .pattern(/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){3,14}(\s*)?$/)
-//         .required()
-//         .messages({
-//             'any.required': `missing required {{#label}} field`
-//         }),
-//     favorite: Joi.bool()
-// })
+const joiSchema = Joi.object({
+    name: Joi.string()
+        .min(3)
+        .max(30)
+        .required()
+        .messages({
+            'any.required': `missing required {{#label}} field`
+        }),
+    email: Joi.string()
+        .email(),
+    phone: Joi.string()
+        .min(3)
+        .max(20)
+        .pattern(/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){3,14}(\s*)?$/),
+    favorite: Joi.bool()
+})
+    .or('email', 'phone')
 
 // const updateContactsSchema = Joi.object({
 //     name: Joi.string()
@@ -63,6 +56,6 @@ const Contact = model("contact", contactSchema)
 
 module.exports = {
     Contact,
-    // joiSchema,
+    joiSchema,
     // updateContactsSchema
 }
