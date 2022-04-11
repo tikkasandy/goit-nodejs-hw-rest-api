@@ -4,7 +4,7 @@ const addContact = async (req, res) => {
     const result = await Contact.create(req.body)
 
     res.json({
-        status: "success",
+        status: 'success',
         code: 201,
         payload: result
     })

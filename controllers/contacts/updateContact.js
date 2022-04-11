@@ -16,7 +16,7 @@ const updateContact = async (req, res) => {
     }
 
     res.json({
-        status: "success",
+        status: 'success',
         code: 200,
         payload: result
     })

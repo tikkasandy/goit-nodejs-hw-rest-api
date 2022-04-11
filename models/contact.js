@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose')
-const Joi = require("joi")
+const Joi = require('joi')
 
 const contactSchema = Schema({
     name: {
@@ -18,7 +18,7 @@ const contactSchema = Schema({
     },
 }, { versionKey: false, timestamps: true })
 
-const Contact = model("contact", contactSchema)
+const Contact = model('contact', contactSchema)
 
 const joiSchema = Joi.object({
     name: Joi.string()
