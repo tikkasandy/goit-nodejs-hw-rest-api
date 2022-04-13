@@ -1,9 +1,12 @@
 const { Contact } = require('../../models')
 const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
-const getContactById = async (req, res) => {
+
+const updateStatusContact = async (req, res) => {
     const { id } = req.params
-    const result = await Contact.findById(id)
+    const { favorite } = req.body
+
+    const result = await Contact.findByIdAndUpdate(id, { favorite }, { new: true })
 
     if (!result) {
         return res
@@ -22,4 +25,4 @@ const getContactById = async (req, res) => {
     })
 }
 
-module.exports = getContactById
+module.exports = updateStatusContact

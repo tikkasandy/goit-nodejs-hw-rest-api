@@ -1,11 +1,12 @@
-const contactsOperations = require('../../models/contacts/operations')
+const { Contact } = require('../../models')
+const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
-const addContact = async (req, res, next) => {
-    const result = await contactsOperations.addContact(req.body)
+const addContact = async (req, res) => {
+    const result = await Contact.create(req.body)
 
-    res.json({
-        status: "success",
-        code: 201,
+    res.status(HTTP_STATUS_CODE.CREATED).json({
+        status: 'success',
+        code: HTTP_STATUS_CODE.CREATED,
         payload: result
     })
 }
