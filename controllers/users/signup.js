@@ -1,5 +1,6 @@
-const { User } = require('../../models')
 const bcrypt = require('bcryptjs')
+const { User } = require('../../models')
+
 const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
 const signup = async (req, res) => {
