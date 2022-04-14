@@ -24,7 +24,7 @@ const userSchema = Schema({
 }, { versionKey: false, timestamps: true })
 
 userSchema.methods.validPassword = function (password) {
-    return bcrypt.compareSync(password, this.password);
+    return bcrypt.compareSync(password, this.password)
 }
 
 const User = model('user', userSchema)
