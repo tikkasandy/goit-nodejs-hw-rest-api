@@ -26,6 +26,8 @@ const login = async (req, res) => {
 
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' })
 
+    const result = await User.findByIdAndUpdate(user._id, { token }, { new: true })
+
     res
         .json({
             status: 'success',
@@ -33,12 +35,13 @@ const login = async (req, res) => {
             payload: {
                 token,
                 user: {
-                    email: user.email,
-                    subscription: user.subscription
-                },
+                    email: result.email,
+                    subscription: result.subscription
+                }
+
             }
         })
-
+    console.log(user)
 }
 
 module.exports = login

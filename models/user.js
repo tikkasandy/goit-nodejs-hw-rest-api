@@ -23,6 +23,12 @@ const userSchema = Schema({
     },
 }, { versionKey: false, timestamps: true })
 
+userSchema.methods.setToken = function (token) {
+    console.log('1', token)
+    this.token = token;
+    console.log('2', this.token)
+}
+
 userSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 }
