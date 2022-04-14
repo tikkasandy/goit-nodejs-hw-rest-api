@@ -3,10 +3,20 @@ const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
 const listContacts = async (req, res) => {
     const { _id } = req.user
-    const { page = 1, limit = 10 } = req.query
+    const { page = 1, limit = 20 } = req.query
     const skip = (page - 1) * limit
 
-    const contacts = await Contact.find({ owner: _id }, "", { skip, limit: Number(limit) }).populate("owner", "_id email")
+    let contacts = null
+
+    if (req.query.favorite) {
+        contacts = await Contact.find({ favorite: true, owner: _id }).skip(skip)
+            .limit(Number(limit))
+    } else {
+
+        contacts = await Contact.find({ owner: _id })
+            .skip(skip)
+            .limit(Number(limit))
+    }
 
     res.json({
         status: 'success',

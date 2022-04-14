@@ -40,7 +40,17 @@ const joiSchema = Joi.object({
         .valid("starter", "pro", "business"),
 })
 
+const joiSubscriptionSchema = Joi.object({
+    subscription: Joi
+        .valid("starter", "pro", "business")
+        .required()
+        .messages({
+            'any.required': `Missing field subscription`
+        }),
+})
+
 module.exports = {
     User,
     joiSchema,
+    joiSubscriptionSchema
 }

@@ -1,8 +1,11 @@
 const express = require('express')
+const helmet = require('helmet')
 const logger = require('morgan')
 const cors = require('cors')
 require('dotenv').config()
+
 const { HTTP_STATUS_CODE } = require('./libs/constants')
+const limiter = require('./middlewares/rate-limit')
 
 const usersRouter = require('./routes/api/users')
 const contactsRouter = require('./routes/api/contacts')
@@ -11,9 +14,11 @@ const app = express()
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 
+app.use(limiter(15 * 60 * 1000, 100))
+app.use(helmet())
 app.use(logger(formatsLogger))
 app.use(cors())
-app.use(express.json())
+app.use(express.json({ limit: 10000 }))
 
 app.use('/api/users', usersRouter)
 app.use('/api/contacts', contactsRouter)

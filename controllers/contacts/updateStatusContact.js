@@ -1,7 +1,6 @@
 const { Contact } = require('../../models')
 const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
-
 const updateStatusContact = async (req, res) => {
     const { id } = req.params
     const { _id } = req.user
