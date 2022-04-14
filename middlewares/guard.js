@@ -24,8 +24,6 @@ const guard = async (req, res, next) => {
     const user = await User.findById(id)
 
     if (!user || user.token !== token) {
-        console.log(user.token)
-        console.log(token)
         return res
             .status(HTTP_STATUS_CODE.UNAUTHORIZED)
             .json({

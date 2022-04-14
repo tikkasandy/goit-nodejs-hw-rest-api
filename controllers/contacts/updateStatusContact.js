@@ -4,9 +4,10 @@ const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
 const updateStatusContact = async (req, res) => {
     const { id } = req.params
+    const { _id } = req.user
     const { favorite } = req.body
 
-    const result = await Contact.findByIdAndUpdate(id, { favorite }, { new: true })
+    const result = await Contact.findOneAndUpdate({ _id: id, owner: _id }, { favorite }, { new: true })
 
     if (!result) {
         return res
