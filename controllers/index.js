@@ -1,5 +1,7 @@
-const controllers = require('./contacts')
+const users = require('./users')
+const contacts = require('./contacts')
 
 module.exports = {
-    controllers,
+    users,
+    contacts,
 }

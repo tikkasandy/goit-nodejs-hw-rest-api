@@ -3,7 +3,9 @@ const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
 const removeContact = async (req, res) => {
     const { id } = req.params
-    const result = await Contact.findByIdAndRemove(id)
+    const { _id } = req.user
+
+    const result = await Contact.findOneAndRemove({ _id: id, owner: _id })
 
     if (!result) {
         return res
