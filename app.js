@@ -19,6 +19,7 @@ app.use(helmet())
 app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json({ limit: 10000 }))
+app.use(express.static('public'))
 
 app.use('/api/users', usersRouter)
 app.use('/api/contacts', contactsRouter)
@@ -26,7 +27,7 @@ app.use('/api/contacts', contactsRouter)
 app.use((req, res) => {
   res
     .status(HTTP_STATUS_CODE.NOT_FOUND)
-    .json({ message: 'Not found' })
+    .json({ message: 'Not found app' })
 })
 
 app.use((err, req, res, next) => {
