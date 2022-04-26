@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs/promises')
+const Jimp = require('jimp')
 
 const { User } = require('../../models')
 const { HTTP_STATUS_CODE } = require('../../libs/constants')
@@ -8,7 +9,17 @@ const avatarsDir = path.join(__dirname, '../../', 'public', 'avatars')
 
 const updateAvatar = async (req, res) => {
     const { path: tempUpload, originalname } = req.file
-    console.log(originalname)
+
+    const avatar = await Jimp.read(tempUpload)
+    await avatar
+        .autocrop()
+        .cover(
+            250,
+            250,
+            Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE,
+        )
+        .writeAsync(tempUpload)
+
     const { _id: id } = req.user
     const imageName = `${id}_${originalname}`
     try {
@@ -29,31 +40,6 @@ const updateAvatar = async (req, res) => {
         await fs.unlink(tempUpload)
         console.log(error)
     }
-    // const { _id } = req.user
-    // const { subscription } = req.body
-
-    // const result = await User.findOneAndUpdate({ id: _id }, { subscription }, { new: true })
-
-    // if (!result) {
-    //     return res
-    //         .status(HTTP_STATUS_CODE.NOT_FOUND)
-    //         .json({
-    //             status: 'error',
-    //             code: HTTP_STATUS_CODE.NOT_FOUND,
-    //             message: `Not found`
-    //         })
-    // }
-
-    // res.json({
-    //     status: 'success',
-    //     code: HTTP_STATUS_CODE.OK,
-    //     payload: {
-    //         user: {
-    //             email: result.email,
-    //             subscription: result.subscription
-    //         }
-    //     }
-    // })
 }
 
 module.exports = updateAvatar
