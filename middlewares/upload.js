@@ -1,7 +1,9 @@
 const multer = require('multer')
 const path = require('path')
 
-const tempDir = path.join(__dirname, '../', 'temp')
+const { FOLDER } = require('../libs/constants')
+
+const tempDir = path.join(__dirname, '../', FOLDER.UPLOAD)
 
 const multerConfig = multer.diskStorage({
     destination: (req, file, cb) => {

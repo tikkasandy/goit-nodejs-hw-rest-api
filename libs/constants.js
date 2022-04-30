@@ -10,4 +10,13 @@ const HTTP_STATUS_CODE = {
     INTERNAL_SERVER_ERROR: 500,
 }
 
-module.exports = { HTTP_STATUS_CODE }
+const FOLDER = {
+    UPLOAD: 'temp',
+    STATIC: 'public',
+    AVATAR: 'public/avatars'
+}
+
+module.exports = {
+    HTTP_STATUS_CODE,
+    FOLDER
+}
