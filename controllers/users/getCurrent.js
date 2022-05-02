@@ -3,7 +3,7 @@
 const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
 const getCurrent = async (req, res) => {
-    const { email, subscription } = req.user
+    const { email, subscription, avatarURL } = req.user
 
     res
         .json({
@@ -12,7 +12,8 @@ const getCurrent = async (req, res) => {
             payload: {
                 user: {
                     email,
-                    subscription
+                    subscription,
+                    avatarURL
                 },
             }
         })
