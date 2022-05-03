@@ -1,5 +1,3 @@
-// const { User } = require('../../models')
-
 const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
 const getCurrent = async (req, res) => {
