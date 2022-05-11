@@ -28,6 +28,14 @@ const userSchema = Schema({
         type: String,
         default: null,
     },
+    verify: {
+        type: Boolean,
+        default: false,
+    },
+    verificationToken: {
+        type: String,
+        required: [true, 'Verify token is required'],
+    },
 }, { versionKey: false, timestamps: true })
 
 userSchema.methods.validPassword = function (password) {
@@ -56,8 +64,18 @@ const joiSubscriptionSchema = Joi.object({
         }),
 })
 
+const joiReverifyEmailSchema = Joi.object({
+    email: Joi.string()
+        .email()
+        .required()
+        .messages({
+            'any.required': `Missing field email`
+        }),
+})
+
 module.exports = {
     User,
     joiSchema,
-    joiSubscriptionSchema
+    joiSubscriptionSchema,
+    joiReverifyEmailSchema
 }

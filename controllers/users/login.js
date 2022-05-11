@@ -10,13 +10,13 @@ const login = async (req, res) => {
     const { email, password } = req.body
     const user = await User.findOne({ email })
 
-    if (!user || !user.validPassword(password)) {
+    if (!user || !user?.verify || !user?.validPassword(password)) {
         return res
             .status(HTTP_STATUS_CODE.UNAUTHORIZED)
             .json({
                 status: 'error',
                 code: HTTP_STATUS_CODE.UNAUTHORIZED,
-                message: `Email or password is wrong`
+                message: `Email is wrong or not verify, or password is wrong`
             })
     }
 
@@ -39,7 +39,6 @@ const login = async (req, res) => {
                     subscription: user.subscription,
                     avatarURL: user.avatarURL
                 }
-
             }
         })
 }

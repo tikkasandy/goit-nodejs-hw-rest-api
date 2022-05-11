@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs')
-// const gravatar = require('gravatar')
+const { nanoid } = require("nanoid")
 
 const { User } = require('../../models')
+const { sendEmail } = require('../../utils')
 const { HTTP_STATUS_CODE } = require('../../libs/constants')
 
 const signup = async (req, res) => {
@@ -19,7 +20,11 @@ const signup = async (req, res) => {
     }
 
     const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-    const result = await User.create({ email, password: hashPassword })
+    const verificationToken = nanoid()
+
+    const result = await User.create({ email, password: hashPassword, verificationToken })
+
+    await sendEmail(email, verificationToken)
 
     res
         .status(HTTP_STATUS_CODE.CREATED)
@@ -31,11 +36,9 @@ const signup = async (req, res) => {
                     email: result.email,
                     subscription: result.subscription,
                     avatarURL: result.avatarURL,
-
                 }
             }
         })
-
 }
 
 module.exports = signup
